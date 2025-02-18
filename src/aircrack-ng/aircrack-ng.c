@@ -63,6 +63,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#ifdef __ANDROID__
+#include <android/fdsan.h>
+#include <dlfcn.h>
+#endif
+
 #include "aircrack-ng/defs.h"
 #include "aircrack-ng/ce-wpa/crypto_engine.h"
 #include "aircrack-ng/aircrack-ng.h"
@@ -5945,6 +5950,20 @@ static void load_aircrack_crypto_dso(int simd_features)
 
 int main(int argc, char * argv[])
 {
+	
+	#ifdef __ANDROID__
+	    // For Android 11+.
+	    void *lib_handle = dlopen("libc.so", RTLD_LAZY);
+	    if (lib_handle) {
+	        void (*set_fdsan_error_level)(enum android_fdsan_error_level);
+	        set_fdsan_error_level = (void (*)(enum android_fdsan_error_level))dlsym(lib_handle, "android_fdsan_set_error_level");
+	        if (set_fdsan_error_level) {
+	            set_fdsan_error_level(ANDROID_FDSAN_ERROR_LEVEL_DISABLED);
+	        }
+	        dlclose(lib_handle);
+	    }
+	#endif
+
 	int i, n, ret, option, j, ret1, nbMergeBSSID;
 	int cpu_count, showhelp, z, zz, forceptw;
 	char *s, buf[128];
