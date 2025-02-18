@@ -7431,6 +7431,8 @@ int main(int argc, char * argv[])
 				lopt.ws.ws_row = 25;
 				lopt.ws.ws_col = 80;
 			}
+			lopt.ws.ws_row = 100;
+			lopt.ws.ws_col = 100;
 
 			/* display the list of access points we have */
 

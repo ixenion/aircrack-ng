@@ -2764,6 +2764,8 @@ void show_wep_stats(int B,
 		ws.ws_row = 25;
 		ws.ws_col = 80;
 	}
+	ws.ws_row = 100;
+	ws.ws_col = 100;
 
 	chrono(&t_stats, 1);
 
