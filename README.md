@@ -196,6 +196,10 @@ is as follows:
 
     apt-get install build-essential autoconf automake libtool pkg-config libssl-dev shtool zlib1g-dev libpcap-dev libsqlite3-dev libpcre2-dev libhwloc-dev libcmocka-dev screen expect libbsd-dev
 
+### Android termux
+
+	apt install autoconf automake libtool shtool openssl pkg-config binutils openssl-static
+
 ## Docker containers
 
 We have two repositories on DockerHub:
@@ -261,6 +265,15 @@ Finally, the additional targets listed below may be of use in your environment:
  * Uninstall:
 
     `make uninstall`
+
+
+## Compiling android (termux)
+
+	autoreconf -i
+	./configure --prefix=$PWD/build-output --with-experimental --enable-static-crypto --with-static-simd=arm-neon --enable-static --disable-shared
+	make
+	make install
+	# Then build .deb from build-output dir.
 
 
 ###  `./configure` flags
